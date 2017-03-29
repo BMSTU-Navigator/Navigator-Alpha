@@ -1,7 +1,7 @@
 import unittest
 from clases import *
-from SQL import *
-from WayBuilderClass import *
+from sql import *
+from way_builder_class import *
 
 
 
