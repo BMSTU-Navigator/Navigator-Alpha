@@ -1,5 +1,5 @@
 from peewee import *
-from Clases import *
+from clases import *
 
 
 

@@ -1,6 +1,6 @@
 
-from WayBuilderClass import *
-from SQL import *
+from way_builder_class import *
+from sql import *
 class Bot:
     bot_id=-1
     dialog_id=-1;
