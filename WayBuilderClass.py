@@ -1,4 +1,4 @@
-from Clases import *
+from clases import *
 
 class WayBuilderClass:
     building=None;

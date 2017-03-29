@@ -4,7 +4,7 @@
 
 import config
 from telebot import TeleBot
-import Bot
+from bot import *
 
 id_counter=0
 id_list=[]
