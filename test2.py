@@ -11,7 +11,7 @@ class FloorCheck(unittest.TestCase):
         wb = WayBuilderClass(building)
         wb.init_pre_count()
         path = wb.request_path(get_id('11'), get_id('25'))
-
+        print('pre first assert')
         self.assertEquals(path.floors, [1, 2])
 
         ids_mas=[]
