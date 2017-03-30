@@ -78,6 +78,8 @@ class WayBuilderClass:
         print(self.paths)
 
         path = Path()
+        path.clearr()
+        print(Path.floors)
 
         path.weight=weight
 
@@ -97,8 +99,12 @@ class WayBuilderClass:
         floors_set=set()
         for point in path.points:
             floors_set.add(point.floor_index)
+
         for floor in floors_set:
             path.floors.append(floor)
+
+        print(path.floors)
+        print(path.weight)
 
 
         # нужен рерайтер картинок
@@ -106,7 +112,7 @@ class WayBuilderClass:
 
 
 
-
+"""
     def psi_init(self):
         self.dijkstra_weight = []
         self.max_id = 10
@@ -150,18 +156,7 @@ class WayBuilderClass:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+"""
 
        #valid = [True] * self.max_id
        #weight = [1000000] * self.max_id

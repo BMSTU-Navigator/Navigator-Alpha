@@ -11,7 +11,7 @@ class FloorCheck(unittest.TestCase):
         wb = WayBuilderClass(building)
         wb.init_pre_count()
         path = wb.request_path(get_id('11'), get_id('25'))
-
+        print('pre first assert')
         self.assertEquals(path.floors, [1, 2])
 
         ids_mas=[]
@@ -22,8 +22,9 @@ class FloorCheck(unittest.TestCase):
         self.assertEquals(ids_mas,[1,2,7,10,14,16])
 
 
-
-
-
+#
+# Успешно найдена ошибка
+# Не сбрасывается класс Path
+#
 
 unittest.TextTestRunner().run(unittest.defaultTestLoader.loadTestsFromTestCase(FloorCheck))
