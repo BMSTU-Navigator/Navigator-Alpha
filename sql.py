@@ -8,7 +8,8 @@ from clases import *
 """
 def get_id(string):
     return (Point.get(Point.name==string)).id
-
+def get_instance_path_by_id(id):
+    return (Floor.get(Floor.id==id)).picture_path
 
 
 
