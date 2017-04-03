@@ -133,10 +133,15 @@ class WayBuilderClass:
         for floor_id in path.floors:
             old_picture_path[floor_id]=sql.get_instance_path_by_id(floor_id)
             #head, tail = ntpath.split(old_picture_path[floor_id])
-            new_picture_path[floor_id]=config.pre_path+config.key+'.jpeg'
+            new_picture_path[floor_id]=config.pre_path+config.pre_key+str(config.key)+'.jpg'
             config.key+=1
             copyfile(old_picture_path[floor_id],new_picture_path[floor_id])
             draw.redraw_picture(new_picture_path[floor_id],draw_points_dict_of_sequences[floor_id])
+
+        path.floors_obj={}
+        for id in floors_set:
+            path.floors_obj[id]=sql.get_floor_by_id(id)
+            path.floors_obj[id].picture_path=new_picture_path[id]
         #copyfile(src, dst)
 
 

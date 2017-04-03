@@ -21,11 +21,11 @@ def redraw_picture(pic_path,point_mas):
 
     #draw.line((0, 0) + im.size, fill=128)
     for line in lines:
-        draw.line((line[0], line[1], line[2], line[3]), fill=128)
+        draw.line((line[0], line[1], line[2], line[3]), fill=(255,0,0,255),width=10)
 
     #draw.line((0, im.size[1], im.size[0], 0), fill=128)
     #del draw
-    im.save('catout.jpg')
+    im.save(pic_path)
 
 
 #redraw_picture('',[])

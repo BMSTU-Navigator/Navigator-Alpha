@@ -20,6 +20,7 @@ class Path:
     points = []
     connections = []
     floors = []
+    floors_obj={}
     weight=-1
     def clearr(self):
         self.points = []
