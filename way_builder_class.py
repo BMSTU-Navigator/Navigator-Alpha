@@ -1,4 +1,10 @@
 from clases import *
+import sql
+import ntpath
+from shutil import copyfile
+import config
+import draw
+
 
 class WayBuilderClass:
     building=None;
@@ -55,17 +61,14 @@ class WayBuilderClass:
                     min_dist = dist[i]
                     min_vertex = i
 
-        #print('dist massive')
-        #print(dist)
-        #print('print path')
+
 
         self.paths = []
         while stop is not None:
             self.paths.append(stop)
             stop = prev[stop]
         self.paths = self.paths[::-1]
-        #print(self.paths)
-        #print('sum')
+
         sum = 0
         for i in range(0, len(self.paths) - 1):
             sum += self.dijkstra_weight[self.paths[i]][self.paths[i + 1]]
@@ -108,8 +111,49 @@ class WayBuilderClass:
 
 
         # нужен рерайтер картинок
+        old_picture_path={}
+        new_picture_path={}
+        draw_points_dict_of_sequences={}
+
+        for id in path.floors:
+            draw_points_dict_of_sequences[id]=[]
+
+        for point in path.points:
+            draw_points_dict_of_sequences[point.floor_index].append(point)
+
+        #draw.redraw_picture('', draw_points_dict_of_sequences[1])
+        #set_of_ids=set()
+        #for point in path.points:
+        #    set_of_ids.add(point.id)
+        #for id in set_of_ids:
+        #    draw_points_dict_of_sequences[id]=[]
+        #for point in path.points:
+        #    draw_points_dict_of_sequences[point.id].append(point)
+
+        for floor_id in path.floors:
+            old_picture_path[floor_id]=sql.get_instance_path_by_id(floor_id)
+            #head, tail = ntpath.split(old_picture_path[floor_id])
+            new_picture_path[floor_id]=config.pre_path+config.pre_key+str(config.key)+'.jpg'
+            config.key+=1
+            copyfile(old_picture_path[floor_id],new_picture_path[floor_id])
+            draw.redraw_picture(new_picture_path[floor_id],draw_points_dict_of_sequences[floor_id])
+
+        path.floors_obj={}
+        for id in floors_set:
+            path.floors_obj[id]=sql.get_floor_by_id(id)
+            path.floors_obj[id].picture_path=new_picture_path[id]
+        #copyfile(src, dst)
+
+
+
+
+
         return path
 
+
+
+    def make_picture(self):
+        pass
 
 
 """

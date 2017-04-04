@@ -9,10 +9,17 @@ from clases import *
 def get_id(string):
     return (Point.get(Point.name==string)).id
 
+def get_instance_path_by_id(id):
+    tmp= (Floor.get(Floor.id==id)).picture_path
+    return tmp
 
+def get_floor_by_id(id):
+    return Floor.get(Floor.id==id)
 
-
-
+def get_dialog_item(id,style):
+    if style==1: return Dialogs.get(Dialogs.id == id).style1
+    if style==2: return Dialogs.get(Dialogs.id == id).style2
+    if style==3: return Dialogs.get(Dialogs.id == id).style3
 
 """поинт - место на карте (кабинет, лвход на лестницу итд)"""
 class Point(Model):
