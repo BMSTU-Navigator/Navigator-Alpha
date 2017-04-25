@@ -22,7 +22,7 @@ class FloorCheck(unittest.TestCase):
         self.assertEquals(ids_mas,[1,2,7,10,14,16])
 
 
-#
+##
 # Успешно найдена ошибка
 # Не сбрасывается класс Path
 #
