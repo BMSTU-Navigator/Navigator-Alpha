@@ -4,7 +4,7 @@ import ntpath
 from shutil import copyfile
 import config
 import draw
-
+from bot_master import logging
 
 class WayBuilderClass:
     building=None;
@@ -14,7 +14,10 @@ class WayBuilderClass:
     max_id = -1
 
     def __init__(self,building):
+        logging.debug('init WB class')
+        logging.debug('request building')
         self.building=building
+        logging.debug('pre count')
         self.init_pre_count()
         return
 
@@ -30,6 +33,7 @@ class WayBuilderClass:
             self.dijkstra_weight[conection.point1][conection.point2]=conection.connection_weight
 
     def dijkstra(self, start,stop):
+        logging.debug('dekstra start:'+str(start)+' stop:'+str(stop))
         self.dijkstra_connectons = []
         for i in range(0, len(self.dijkstra_weight)):
             self.dijkstra_connectons.append([])
@@ -38,7 +42,7 @@ class WayBuilderClass:
                     self.dijkstra_connectons[i].append(j)
 
         print(self.dijkstra_connectons)
-
+        logging.debug(self.dijkstra_connectons)
         size = self.max_id
         INF = 10 ** 10
 
@@ -72,17 +76,19 @@ class WayBuilderClass:
         sum = 0
         for i in range(0, len(self.paths) - 1):
             sum += self.dijkstra_weight[self.paths[i]][self.paths[i + 1]]
-            #print(sum)
+
         return sum
 
 
     def request_path(self,start,stop):
+        logging.debug('start request path start:'+str(start)+' stop:'+str(stop))
         weight = self.dijkstra(start,stop)
         print(self.paths)
 
         path = Path()
         path.clearr()
         print(Path.floors)
+        logging.debug(Path.floors)
 
         path.weight=weight
 
@@ -107,7 +113,9 @@ class WayBuilderClass:
             path.floors.append(floor)
 
         print(path.floors)
+        logging.debug(path.floors)
         print(path.weight)
+        logging.debug(path.weight)
 
 
         # нужен рерайтер картинок
@@ -121,14 +129,7 @@ class WayBuilderClass:
         for point in path.points:
             draw_points_dict_of_sequences[point.floor_index].append(point)
 
-        #draw.redraw_picture('', draw_points_dict_of_sequences[1])
-        #set_of_ids=set()
-        #for point in path.points:
-        #    set_of_ids.add(point.id)
-        #for id in set_of_ids:
-        #    draw_points_dict_of_sequences[id]=[]
-        #for point in path.points:
-        #    draw_points_dict_of_sequences[point.id].append(point)
+
 
         for floor_id in path.floors:
             old_picture_path[floor_id]=sql.get_instance_path_by_id(floor_id)
@@ -147,7 +148,7 @@ class WayBuilderClass:
 
 
 
-
+        logging.debug('return path')
         return path
 
 
@@ -155,68 +156,3 @@ class WayBuilderClass:
     def make_picture(self):
         pass
 
-
-"""
-    def psi_init(self):
-        self.dijkstra_weight = []
-        self.max_id = 10
-        self.paths = [0]*self.max_id
-
-        for i in range(self.max_id):
-            self.dijkstra_weight.append([10000] * self.max_id)
-
-        self.dijkstra_weight[1][2] = 5
-        self.dijkstra_weight[2][1] =5
-        self.dijkstra_weight[2][3] = 10
-        self.dijkstra_weight[3][2] = 10
-        self.dijkstra_weight[3][4] = 1
-        self.dijkstra_weight[4][3] = 1
-        self.dijkstra_weight[4][5] = 1
-        self.dijkstra_weight[5][4] = 1
-        self.dijkstra_weight[5][8] = 1
-        self.dijkstra_weight[8][5] = 1
-        self.dijkstra_weight[8][9] = 1
-        self.dijkstra_weight[9][8] = 1
-        self.dijkstra_weight[3][6] = 3
-        self.dijkstra_weight[6][3] = 3
-        self.dijkstra_weight[6][7] = 6
-        self.dijkstra_weight[7][6] = 6
-        self.dijkstra_weight[7][9] = 8
-        self.dijkstra_weight[9][7] = 8
-        # прочитать g // g[0 ... n - 1][0 ... n - 1] - массив, в котором хранятся веса рёбер, g[i][j] = 2000000000, если ребра между i и j нет
-
-        #      -4-5-8-
-        # 1-2-3<        >-9
-        #
-
-        # первая вершина-вторая вершина-вес перехода
-        # 1-2-5
-        # 2-1-5
-
-        #                -(3)-4-(5)-5-(2)-8-(5)-
-        # 1-(5)-2-(10)-3<                         >-9
-        #                -(3)-6-(6)-7-(8)------
-
-
-
-
-"""
-
-       #valid = [True] * self.max_id
-       #weight = [1000000] * self.max_id
-       #weight[start] = 0
-       #for i in range(self.max_id):
-       #    self.paths[i] = []
-       #    min_weight = 1000001
-       #    ID_min_weight = -1
-       #    for i in range(self.max_id):
-       #        if valid[i] and weight[i] < min_weight:
-       #            min_weight = weight[i]
-       #            ID_min_weight = i
-
-       #    for i in range(self.max_id):
-       #        if weight[ID_min_weight] + self.dijkstra_graph[ID_min_weight][i] < weight[i]:
-       #            weight[i] = weight[ID_min_weight] + self.dijkstra_graph[ID_min_weight][i]
-       #    valid[ID_min_weight] = False
-       #if weight[stop]==10000:raise Exception('no path to point')
-       #return weight
