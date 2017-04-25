@@ -1,6 +1,7 @@
 
 from way_builder_class import *
 from sql import *
+from bot_master import logging
 class Bot:
     bot_id=-1
     dialog_id=-1;
@@ -27,26 +28,20 @@ class Bot:
         self.dialog_state=0
         self.dialog_style=1
         self.bot_id=id
-
+        logging.debug('init bot '+str(id))
+        logging.debug('request building')
         self.building = get_building()
+        logging.debug('init WB class')
         self.wb = WayBuilderClass(self.building)
+        logging.debug('config wb')
         self.wb.init_pre_count()
 
 
     def get_answer(self,input_string):
 
-        """ Состояния -2 -1 нужны были для тестов"""
-
-        #if self.dialog_state==-2:
-        #    self.send_message('bot itit-2')
-        #    self.dialog_state=-1
-        #    return
-        #if self.dialog_state==-1:
-        #    self.send_message('bot itit-1')
-        #    self.dialog_state=0
-        #    return
-
-
+        logging.debug('request amswer from bot '+str(self.bot_id))
+        logging.debug('request by string '+input_string)
+        logging.debug('bot in  state ' + str(self.dialog_state))
 
         if self.dialog_state==0:
             self.send_message(sql.get_dialog_item(0,1))
@@ -96,9 +91,11 @@ class Bot:
             return
 
     def send_message(self, text):
+        logging.debug('bot ' + str(self.bot_id)+' sending text:'+text)
         self.telebot.send_message(self.dialog_id,
                                   text)  # + '  answer of bot '+str(self.bot_id) +'  chat_id='+ str(self.dialog_id))
     def send_photo(self, path):
+        logging.debug('bot ' + str(self.bot_id) + ' sending photo:' + path)
         #self.telebot.send_message(self.dialog_id, '+')
         self.telebot.send_photo(self.dialog_id, open(path, 'rb'))
         #self.telebot.send_message(self.dialog_id, '+')

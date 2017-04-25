@@ -3,13 +3,25 @@
 import config
 from telebot import TeleBot
 from bot import *
+import logging
 
 id_counter=0
 id_list=[]
 bots={}
 
+
+
+logging.basicConfig(filename='example.log',level=logging.DEBUG)
+
+#logging.debug('This message should go to the log file')
+#logging.info('So should this')
+#logging.warning('And this, too')
+
+
 print('start')
+logging.debug('start')
 bot = TeleBot(config.token)
+logging.debug('sucsess start')
 print('sucsess start')
 
 
